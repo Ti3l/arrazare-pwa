@@ -19,16 +19,7 @@ html,body{
   background:#020b16;
 }
 
-#appFrame{
-  width:100vw;
-  height:100vh;
-  border:0;
-  display:none;
-}
-
-#loader{
-  width:100vw;
-  height:100vh;
+body{
   display:flex;
   align-items:center;
   justify-content:center;
@@ -100,19 +91,12 @@ p{
 
 <body>
 
-<div id="loader">
-  <div class="container">
-    <img src="icon-512.png" class="logo" alt="Arràzare">
-    <h1>ARRÀZARE ESTOQUE</h1>
-    <p>Carregando sistema...</p>
-    <div class="loader-bar"><span></span></div>
-  </div>
+<div class="container">
+  <img src="icon-512.png" class="logo" alt="Arràzare">
+  <h1>ARRÀZARE ESTOQUE</h1>
+  <p>Carregando sistema...</p>
+  <div class="loader-bar"><span></span></div>
 </div>
-
-<iframe
-  id="appFrame"
-  src="https://script.google.com/macros/s/AKfycbymi5Z9YmzARNcTysIp_AWCqShNwFrniA7Ek4AhMUc5OzWGjLDv9Cjkvo-n4a_cxqm4Tw/exec">
-</iframe>
 
 <script>
 if ("serviceWorker" in navigator) {
@@ -120,8 +104,8 @@ if ("serviceWorker" in navigator) {
 }
 
 setTimeout(() => {
-  document.getElementById("loader").style.display = "none";
-  document.getElementById("appFrame").style.display = "block";
+  window.location.href =
+    "https://script.google.com/macros/s/AKfycbymi5Z9YmzARNcTysIp_AWCqShNwFrniA7Ek4AhMUc5OzWGjLDv9Cjkvo-n4a_cxqm4Tw/exec";
 }, 1800);
 </script>
 
