@@ -12,6 +12,10 @@
 
 <style>
 
+*{
+  box-sizing:border-box;
+}
+
 body{
   margin:0;
   background:#020b16;
@@ -23,24 +27,105 @@ body{
   justify-content:center;
 
   height:100vh;
+  overflow:hidden;
 }
 
 .container{
   text-align:center;
+  animation:entradaSuave .8s ease forwards;
 }
 
 .logo{
-  width:120px;
-  margin-bottom:20px;
+  width:100px;
+  margin-bottom:24px;
+
+  animation:
+    flutuar 2.4s ease-in-out infinite;
+
+  filter:
+    drop-shadow(0 0 12px rgba(255,90,0,.35))
+    drop-shadow(0 0 30px rgba(255,90,0,.25));
 }
 
 h1{
   margin:0;
   color:#ff5a00;
+  font-size:38px;
+  font-weight:800;
+  letter-spacing:.5px;
 }
 
 p{
-  opacity:.8;
+  margin-top:14px;
+  opacity:.75;
+  font-size:18px;
+}
+
+.loader{
+  width:180px;
+  height:5px;
+
+  margin:24px auto 0;
+
+  background:rgba(255,255,255,.08);
+
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.loader span{
+  display:block;
+
+  width:45%;
+  height:100%;
+
+  background:#ff5a00;
+
+  border-radius:999px;
+
+  animation:carregar 1.2s ease-in-out infinite;
+}
+
+@keyframes entradaSuave{
+
+  from{
+    opacity:0;
+    transform:
+      translateY(20px)
+      scale(.95);
+  }
+
+  to{
+    opacity:1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+@keyframes flutuar{
+
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-10px);
+  }
+
+}
+
+@keyframes carregar{
+
+  0%{
+    transform:translateX(-140%);
+  }
+
+  100%{
+    transform:translateX(320%);
+  }
+
 }
 
 </style>
@@ -53,23 +138,20 @@ p{
   <img
     src="icon-512.png"
     class="logo"
+    alt="Arràzare"
   >
 
   <h1>ARRÀZARE ESTOQUE</h1>
 
   <p>Carregando sistema...</p>
 
+  <div class="loader">
+    <span></span>
+  </div>
+
 </div>
 
 <script>
-
-setTimeout(() => {
-
-  window.location.href =
-  "https://script.google.com/macros/s/AKfycbymi5Z9YmzARNcTysIp_AWCqShNwFrniA7Ek4AhMUc5OzWGjLDv9Cjkvo-n4a_cxqm4Tw/exec";
-
-},1500);
-
 
 if ("serviceWorker" in navigator) {
 
@@ -78,6 +160,13 @@ if ("serviceWorker" in navigator) {
   );
 
 }
+
+setTimeout(() => {
+
+  window.location.href =
+  "https://script.google.com/macros/s/AKfycbymi5Z9YmzARNcTysIp_AWCqShNwFrniA7Ek4AhMUc5OzWGjLDv9Cjkvo-n4a_cxqm4Tw/exec";
+
+}, 1800);
 
 </script>
 
