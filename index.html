@@ -4,30 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Arrazare Estoque</title>
-
+<title>Arràzare Estoque</title>
 <meta name="theme-color" content="#ff5a00">
-
 <link rel="manifest" href="manifest.json">
 
 <style>
+*{box-sizing:border-box}
 
-*{
-  box-sizing:border-box;
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#020b16;
 }
 
-body{
-  margin:0;
-  background:#020b16;
-  color:#fff;
-  font-family:Arial,Helvetica,sans-serif;
+#appFrame{
+  width:100vw;
+  height:100vh;
+  border:0;
+  display:none;
+}
 
+#loader{
+  width:100vw;
+  height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-
-  height:100vh;
-  overflow:hidden;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
 .container{
@@ -38,10 +44,7 @@ body{
 .logo{
   width:100px;
   margin-bottom:24px;
-
-  animation:
-    flutuar 2.4s ease-in-out infinite;
-
+  animation:flutuar 2.4s ease-in-out infinite;
   filter:
     drop-shadow(0 0 12px rgba(255,90,0,.35))
     drop-shadow(0 0 30px rgba(255,90,0,.25));
@@ -52,7 +55,6 @@ h1{
   color:#ff5a00;
   font-size:38px;
   font-weight:800;
-  letter-spacing:.5px;
 }
 
 p{
@@ -61,115 +63,66 @@ p{
   font-size:18px;
 }
 
-.loader{
+.loader-bar{
   width:180px;
   height:5px;
-
   margin:24px auto 0;
-
   background:rgba(255,255,255,.08);
-
   border-radius:999px;
   overflow:hidden;
 }
 
-.loader span{
+.loader-bar span{
   display:block;
-
   width:45%;
   height:100%;
-
   background:#ff5a00;
-
   border-radius:999px;
-
   animation:carregar 1.2s ease-in-out infinite;
 }
 
 @keyframes entradaSuave{
-
-  from{
-    opacity:0;
-    transform:
-      translateY(20px)
-      scale(.95);
-  }
-
-  to{
-    opacity:1;
-    transform:
-      translateY(0)
-      scale(1);
-  }
-
+  from{opacity:0; transform:translateY(20px) scale(.95)}
+  to{opacity:1; transform:translateY(0) scale(1)}
 }
 
 @keyframes flutuar{
-
-  0%,100%{
-    transform:translateY(0);
-  }
-
-  50%{
-    transform:translateY(-10px);
-  }
-
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
 }
 
 @keyframes carregar{
-
-  0%{
-    transform:translateX(-140%);
-  }
-
-  100%{
-    transform:translateX(320%);
-  }
-
+  0%{transform:translateX(-140%)}
+  100%{transform:translateX(320%)}
 }
-
 </style>
-
 </head>
+
 <body>
 
-<div class="container">
-
-  <img
-    src="icon-512.png"
-    class="logo"
-    alt="Arràzare"
-  >
-
-  <h1>ARRÀZARE ESTOQUE</h1>
-
-  <p>Carregando sistema...</p>
-
-  <div class="loader">
-    <span></span>
+<div id="loader">
+  <div class="container">
+    <img src="icon-512.png" class="logo" alt="Arràzare">
+    <h1>ARRÀZARE ESTOQUE</h1>
+    <p>Carregando sistema...</p>
+    <div class="loader-bar"><span></span></div>
   </div>
-
 </div>
 
+<iframe
+  id="appFrame"
+  src="https://script.google.com/macros/s/AKfycbymi5Z9YmzARNcTysIp_AWCqShNwFrniA7Ek4AhMUc5OzWGjLDv9Cjkvo-n4a_cxqm4Tw/exec">
+</iframe>
+
 <script>
-
 if ("serviceWorker" in navigator) {
-
-  navigator.serviceWorker.register(
-    "./service-worker.js"
-  );
-
+  navigator.serviceWorker.register("./service-worker.js");
 }
 
 setTimeout(() => {
-
-  <iframe
-  src="https://script.google.com/macros/s/AKfycbymi5Z9YmzARNcTysIp_AWCqShNwFrniA7Ek4AhMUc5OzWGjLDv9Cjkvo-n4a_cxqm4Tw/exec"
-  style="width:100vw; height:100vh; border:0;"
-></iframe>
-
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("appFrame").style.display = "block";
 }, 1800);
-
 </script>
 
 </body>
