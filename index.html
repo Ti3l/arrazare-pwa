@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Arrazare Estoque</title>
 <meta name="theme-color" content="#ff5a00">
@@ -16,7 +16,9 @@ html,body{
   width:100%;
   height:100%;
   overflow:hidden;
-  background:#020b16;
+  background:
+    radial-gradient(circle at top, rgba(255,90,0,.22), transparent 35%),
+    linear-gradient(135deg,#020b16,#061525,#020b16);
 }
 
 body{
@@ -28,37 +30,60 @@ body{
 }
 
 .container{
+  width:90%;
+  max-width:420px;
   text-align:center;
+  padding:38px 26px;
+  border-radius:28px;
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(14px);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.08);
   animation:entradaSuave .8s ease forwards;
 }
 
+.logo-wrap{
+  width:140px;
+  height:140px;
+  margin:0 auto 24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:rgba(255,90,0,.12);
+  box-shadow:0 0 45px rgba(255,90,0,.25);
+}
+
 .logo{
-  width:100px;
-  margin-bottom:24px;
-  animation:flutuar 2.4s ease-in-out infinite;
+  width:105px;
+  animation:flutuar 2.6s ease-in-out infinite;
   filter:
-    drop-shadow(0 0 12px rgba(255,90,0,.35))
-    drop-shadow(0 0 30px rgba(255,90,0,.25));
+    drop-shadow(0 0 14px rgba(255,90,0,.5))
+    drop-shadow(0 0 30px rgba(255,90,0,.3));
 }
 
 h1{
   margin:0;
   color:#ff5a00;
-  font-size:38px;
-  font-weight:800;
+  font-size:34px;
+  font-weight:900;
+  letter-spacing:1px;
 }
 
-p{
-  margin-top:14px;
-  opacity:.75;
+.status{
+  margin-top:16px;
+  min-height:26px;
+  opacity:.9;
   font-size:18px;
+  transition:.3s ease;
 }
 
 .loader-bar{
-  width:180px;
-  height:5px;
-  margin:24px auto 0;
-  background:rgba(255,255,255,.08);
+  width:210px;
+  height:6px;
+  margin:28px auto 0;
+  background:rgba(255,255,255,.1);
   border-radius:999px;
   overflow:hidden;
 }
@@ -67,24 +92,48 @@ p{
   display:block;
   width:45%;
   height:100%;
-  background:#ff5a00;
+  background:linear-gradient(90deg,#ff5a00,#ff9a3c);
   border-radius:999px;
-  animation:carregar 1.2s ease-in-out infinite;
+  animation:carregar 1.1s ease-in-out infinite;
 }
 
+.dots{
+  margin-top:18px;
+  display:flex;
+  justify-content:center;
+  gap:8px;
+}
+
+.dots span{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#ff5a00;
+  opacity:.35;
+  animation:pulsar 1.2s infinite;
+}
+
+.dots span:nth-child(2){animation-delay:.2s}
+.dots span:nth-child(3){animation-delay:.4s}
+
 @keyframes entradaSuave{
-  from{opacity:0; transform:translateY(20px) scale(.95)}
+  from{opacity:0; transform:translateY(25px) scale(.94)}
   to{opacity:1; transform:translateY(0) scale(1)}
 }
 
 @keyframes flutuar{
   0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
+  50%{transform:translateY(-12px)}
 }
 
 @keyframes carregar{
   0%{transform:translateX(-140%)}
-  100%{transform:translateX(320%)}
+  100%{transform:translateX(330%)}
+}
+
+@keyframes pulsar{
+  0%,100%{opacity:.25; transform:scale(1)}
+  50%{opacity:1; transform:scale(1.35)}
 }
 </style>
 </head>
@@ -92,10 +141,24 @@ p{
 <body>
 
 <div class="container">
-  <img src="icon-512.png" class="logo" alt="Arràzare">
+  <div class="logo-wrap">
+    <img 
+      src="https://drive.google.com/thumbnail?id=1r31-ulwNwwJynLKMMMpjCQDfiARcKEIb&sz=w512" 
+      class="logo" 
+      alt="Arrazare">
+  </div>
+
   <h1>ARRAZARE ESTOQUE</h1>
-  <p>Carregando sistema...</p>
+
+  <div class="status" id="status">Carregando sistema...</div>
+
   <div class="loader-bar"><span></span></div>
+
+  <div class="dots">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </div>
 
 <script>
@@ -103,10 +166,36 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./service-worker.js");
 }
 
+const mensagens = [
+  "Carregando sistema...",
+  "Verificando atualizações...",
+  "Sistema atualizado...",
+  "Preparando estoque...",
+  "Abrindo painel..."
+];
+
+let index = 0;
+const statusEl = document.getElementById("status");
+
+const trocarMensagem = setInterval(() => {
+  index++;
+
+  if (index < mensagens.length) {
+    statusEl.style.opacity = 0;
+
+    setTimeout(() => {
+      statusEl.textContent = mensagens[index];
+      statusEl.style.opacity = 1;
+    }, 250);
+  }
+}, 900);
+
 setTimeout(() => {
+  clearInterval(trocarMensagem);
+
   window.location.href =
     "https://script.google.com/macros/s/AKfycbyCsMPdEB2jGHjImp84lMiHHmFGIrMbXPQw1KzaImxGBs7wsinEVGIN5AsZEF1AjUEjKA/exec";
-}, 1800);
+}, 4500);
 </script>
 
 </body>
